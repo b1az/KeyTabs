@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script>
+function execute_tab_closer(direction) {
+  var tabs = safari.application.activeBrowserWindow.tabs;
+  var active_tab_idx = tabs.indexOf(safari.application.activeBrowserWindow.activeTab);
+  if (direction == "closeTabsRight") {
+    for (var i=active_tab_idx+1; i<tabs.length; ++i) {
+      tabs[i].close();
+    }
+  } else {
+    for (var i=active_tab_idx-1; i>=0; --i) {
+      tabs[i].close();
+    }
+  }
+}
+function handleKeyboardMessage(e) {
+    if (e.name == 'closeTabsRight')
+        execute_tab_closer("closeTabsRight")
+    else if (e.name == 'closeTabsLeft')
+        execute_tab_closer("closeTabsLeft")
+}
+safari.application.addEventListener('message', handleKeyboardMessage, false);
+</script>
+</head>
+</html>
